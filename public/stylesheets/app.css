@@ -39,6 +39,10 @@
 
 .table.album-song-listing {
   font-weight: 300; }
+  .table.album-song-listing .first {
+    background-color: red; }
+  .table.album-song-listing .odd {
+    background-color: rgba(123, 70, 163, 0.3); }
   .table.album-song-listing td {
     padding: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.4); }
