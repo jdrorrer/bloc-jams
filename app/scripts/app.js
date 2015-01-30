@@ -24,27 +24,67 @@ blocJams = angular.module('BlocJams',['ui.router']);
 blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
-  $stateProvider.state('landing', {
+  $stateProvider.state('index', {
+    url: '',
+    views: {
+      'landingView': {
+        template: 'index.landing'
+      },
+      'collectionView': {
+        template: 'index.collection'
+      },
+      'albumView': {
+        template: 'index.album'
+      },
+      'songView': {
+        template: 'index.song'
+      }
+    }
+  })
+  .state('landing', {
     url: '/',
     controller: 'Landing.controller',
-    templateUrl: '/templates/landing.html'
-  });
-
-  $stateProvider.state('song', {
+    // templateUrl: '/templates/landing.html',
+    views: {
+      'landingView': {
+        template: 'landing.landingView'
+      }
+    }
+  })
+  .state('song', {
     url: '/song',
-    templateUrl: '/templates/song.html'
-  });
-
-  $stateProvider.state('collection', {
+    // templateUrl: '/templates/song.html',
+    views: {
+      'songView': {
+        template: 'song.songView'
+      }
+    }
+  })
+  .state('collection', {
     url: '/collection',
     controller: 'Collection.controller',
-    templateUrl: '/templates/collection.html'
-  });
-
-  $stateProvider.state('album', {
+    // templateUrl: '/templates/collection.html',
+    views: {
+      'collectionView': {
+        template: 'collection.collectionView'
+      },
+      'playerBar': {
+        template: 'collection.playerBar'
+      }
+    }
+  })
+  .state('album', {
     url: '/album',
     controller: 'Album.controller',
-    templateUrl: '/templates/album.html'
+    // templateUrl: '/templates/album.html',
+    views: {
+      'albumView': {
+        template: 'album.albumView'
+      },
+      'playerBar': {
+        template: 'album.playerBar'
+      }
+    }
   });
 }]);
 

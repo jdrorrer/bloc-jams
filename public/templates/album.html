@@ -1,4 +1,4 @@
-<div class="album-container container">
+<div class="album-container container" ui-view="albumView">
   <div class="album-container-header row"> <!-- Album Header -->
     <div class="col-md-3"> <!-- Album Image -->
       <img ng-src="{{ album.albumArtUrl }}" />
@@ -36,5 +36,6 @@
       </tr>
     </table>
   </div>
-  <ng-include src="'/templates/player_bar.html'"></ng-include>
+  <!-- <ng-include src="'/templates/player_bar.html'"></ng-include> -->
+  <div ui-view="playerBar"></div>
 </div>
