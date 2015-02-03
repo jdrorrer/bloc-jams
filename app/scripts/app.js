@@ -201,18 +201,6 @@ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
     onTimeUpdate: function(callback) {
       return $rootScope.$on('sound:timeupdate', callback);
     },
-    unmute: function() {
-      if(currentSoundFile) {
-        currentSoundFile.unmute();
-      }
-      var currentVolume = currentSoundFile.getVolume();
-      this.setVolume(currentVolume);
-    },
-    getVolume: function() {
-      if(currentSoundFile) {
-        currentSoundFile.getVolume();
-      }
-    },
     setVolume: function(volume) {
       if(currentSoundFile) {
         currentSoundFile.setVolume(volume);
