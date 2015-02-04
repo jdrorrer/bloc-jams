@@ -511,26 +511,54 @@ blocJams.directive('clickMe', ['$window', function($window) {
   };
 }]);
 
-blocJams.directive('countHoverTime', ['$timeout', '$document', '$log', function($timeout, $document, $log) {
+blocJams.directive('countHoverTime', ['$interval', '$document', '$log', function($interval, $document, $log) {
   return {
+    template: '<div ng-mouseenter="onHover()" ng-mouseleave="offHover()">Hover</div>',
     restrict: 'A',
     scope: {},
     link: function(scope, element, attributes) {
       scope.timer = 0;
-      scope.testCounter = 0;
+      var timeOut; // Initialize $interval ID - this will be passed to $interval.cancel()
 
       scope.onHover = function() {
-        scope.testCounter += 1;
-        $timeout(function() {
-          scope.timer += 1000;
-        }, 1000);
-        $log.log(scope.testCounter);
-        console.log("Just hovered on");
+        var countTime = function() {
+          scope.timer += 1000; // Add 1 second to timer every time countTime is called
+        }
+        // Run countTime once every second to add 1 second to timer while hovering
+        timeOut = $interval(countTime, 1000); 
       };
 
       scope.offHover = function() {
-        $log.log("Amount of time hovered on button " + scope.timer);
-        console.log("just hovered off");
+        var getSeconds = scope.timer / 1000; // Converts milliseconds to seconds
+        $log.log("Amount of time hovered on button (in seconds): " + getSeconds);
+        $interval.cancel(timeOut); // Cancel interval on mouse leave
+        scope.timer = 0; // Reset timer
+      };
+    }
+  };
+}]);
+
+blocJams.directive('classify', ['$log', function($log) {
+  return {
+    template: '<div ng-transclude ng-class="createClassFromText()"></div>',
+    restrict: 'EAC',
+    transclude: true,
+    replace: false,
+    link: function(scope, element, attributes) {
+      var $htmlElement = $(element);
+
+      // Get the string within the HTML element
+      var elementText = $htmlElement.text();
+
+      // Takes text within HTML element and adds it as a class to that element
+      scope.createClassFromText = function() {
+        $htmlElement.empty(); // Remove all HTML from directive element
+        $htmlElement.removeAttr('classify'); // Remove classify attribute
+        
+        // Add element text back into element
+        $htmlElement.append(elementText);
+        // Add the HTML text string to the element as a class
+        $htmlElement.addClass(elementText); 
       };
     }
   };
