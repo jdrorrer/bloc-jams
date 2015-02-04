@@ -315,7 +315,12 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
   });
 }]);
 
-blocJams.controller('Landing.controller', ['$scope', function($scope) {
+blocJams.controller('Landing.controller', ['$scope', 'ConsoleLogger', function($scope, ConsoleLogger) {
+  $scope.consoleLogger = {};
+  $scope.logToConsole = function() {
+    console.log($scope.consoleLogger.string);
+  };
+
   $scope.headerText = "Bloc Jams";
   $scope.subText = "Turn the music up!";
 
@@ -345,7 +350,9 @@ blocJams.controller('Landing.controller', ['$scope', function($scope) {
   };
 }]);
 
-blocJams.controller('Collection.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
+blocJams.controller('Collection.controller', ['$scope', 'SongPlayer', 'ConsoleLogger', function($scope, SongPlayer, ConsoleLogger) {
+  ConsoleLogger.log();
+
   $scope.hideOverlay = true;
   $scope.albums = [];
   for (var i = 0; i < 33; i++) {
@@ -357,7 +364,9 @@ blocJams.controller('Collection.controller', ['$scope', 'SongPlayer', function($
   }
 }]);
 
-blocJams.controller('Album.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
+blocJams.controller('Album.controller', ['$scope', 'SongPlayer', 'ConsoleLogger', function($scope, SongPlayer, ConsoleLogger) {
+  ConsoleLogger.log();
+
   $scope.album = angular.copy(albumPicasso);
 
   var hoveredSong = null;
@@ -389,7 +398,9 @@ blocJams.controller('Album.controller', ['$scope', 'SongPlayer', function($scope
   };
 }]);
 
-blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
+blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', 'ConsoleLogger', function($scope, SongPlayer, ConsoleLogger) {
+  ConsoleLogger.log();
+
   $scope.songPlayer = SongPlayer;
   var previousVolume = SongPlayer.volume;
 
@@ -417,6 +428,14 @@ blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($s
       $scope.playTime = time;
     });
   });
+}]);
+
+blocJams.service('ConsoleLogger', ['$log', function($log) {
+  return {
+    log: function(string) {
+      $log.log(string);
+    }
+  }
 }]);
 
 blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
@@ -467,18 +486,6 @@ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
     },
     onTimeUpdate: function(callback) {
       return $rootScope.$on('sound:timeupdate', callback);
-    },
-    unmute: function() {
-      if(currentSoundFile) {
-        currentSoundFile.unmute();
-      }
-      var currentVolume = currentSoundFile.getVolume();
-      this.setVolume(currentVolume);
-    },
-    getVolume: function() {
-      if(currentSoundFile) {
-        currentSoundFile.getVolume();
-      }
     },
     setVolume: function(volume) {
       if(currentSoundFile) {
