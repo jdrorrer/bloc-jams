@@ -468,18 +468,6 @@ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
     onTimeUpdate: function(callback) {
       return $rootScope.$on('sound:timeupdate', callback);
     },
-    unmute: function() {
-      if(currentSoundFile) {
-        currentSoundFile.unmute();
-      }
-      var currentVolume = currentSoundFile.getVolume();
-      this.setVolume(currentVolume);
-    },
-    getVolume: function() {
-      if(currentSoundFile) {
-        currentSoundFile.getVolume();
-      }
-    },
     setVolume: function(volume) {
       if(currentSoundFile) {
         currentSoundFile.setVolume(volume);
@@ -505,6 +493,45 @@ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
       });
 
       this.play();
+    }
+  };
+}]);
+
+blocJams.directive('clickMe', ['$window', function($window) {
+  return {
+    templateUrl: '/templates/directives/click-me.html',
+    replace: true,
+    restrict: 'E',
+    scope: {},
+    link: function(scope, element, attributes) {
+      scope.onClickMe = function() {
+        $window.alert("You just clicked me!");
+      };
+    }
+  };
+}]);
+
+blocJams.directive('countHoverTime', ['$timeout', '$document', '$log', function($timeout, $document, $log) {
+  return {
+    restrict: 'A',
+    scope: {},
+    link: function(scope, element, attributes) {
+      scope.timer = 0;
+      scope.testCounter = 0;
+
+      scope.onHover = function() {
+        scope.testCounter += 1;
+        $timeout(function() {
+          scope.timer += 1000;
+        }, 1000);
+        $log.log(scope.testCounter);
+        console.log("Just hovered on");
+      };
+
+      scope.offHover = function() {
+        $log.log("Amount of time hovered on button " + scope.timer);
+        console.log("just hovered off");
+      };
     }
   };
 }]);
