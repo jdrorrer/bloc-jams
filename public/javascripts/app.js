@@ -295,16 +295,16 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
     url: '',
     views: {
       'landingView': {
-        template: 'index.landing'
+        templateUrl: '/templates/landing.html'
       },
       'collectionView': {
-        template: 'index.collection'
+        templateUrl: '/templates/collection.html'
       },
       'albumView': {
-        template: 'index.album'
+        templateUrl: '/templates/album.html'
       },
       'songView': {
-        template: 'index.song'
+        templateUrl: '/templates/song.html'
       }
     }
   })
@@ -314,7 +314,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
     // templateUrl: '/templates/landing.html',
     views: {
       'landingView': {
-        template: 'landing.landingView'
+        templateUrl: '/templates/landing.html'
       }
     }
   })
@@ -323,7 +323,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
     // templateUrl: '/templates/song.html',
     views: {
       'songView': {
-        template: 'song.songView'
+        templateUrl: '/templates/song.html'
       }
     }
   })
@@ -333,10 +333,10 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
     // templateUrl: '/templates/collection.html',
     views: {
       'collectionView': {
-        template: 'collection.collectionView'
+        templateUrl: '/templates/collection.html'
       },
       'playerBar': {
-        template: 'collection.playerBar'
+        templateUrl: '/templates/player_bar.html'
       }
     }
   })
@@ -346,10 +346,10 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
     // templateUrl: '/templates/album.html',
     views: {
       'albumView': {
-        template: 'album.albumView'
+        template: '/templates/album.html'
       },
       'playerBar': {
-        template: 'album.playerBar'
+        templateUrl: '/templates/player_bar.html'
       }
     }
   });
