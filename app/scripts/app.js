@@ -122,7 +122,7 @@ blocJams.controller('Album.controller', ['$scope', 'SongPlayer', function($scope
   };
 }]);
 
-blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
+blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', '$filter', function($scope, SongPlayer, $filter) {
   $scope.songPlayer = SongPlayer;
   var previousVolume = SongPlayer.volume;
 
@@ -147,7 +147,8 @@ blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($s
 
   SongPlayer.onTimeUpdate(function(event, time) {
     $scope.$apply(function() {
-      $scope.playTime = time;
+      filteredPlayTime = $filter('timecode')(time);
+      $scope.playTime = filteredPlayTime;
     });
   });
 }]);
