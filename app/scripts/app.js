@@ -261,12 +261,14 @@ blocJams.directive('slider', ['$document', function($document) {
     replace: true,
     restrict: 'E',
     scope: {
-      onChange: '&'
+      onChange: '@'
     }, // Creates a scope that exists only in this directive
     link: function(scope, element, attributes) {
       // These values represent the progress into the song/volume bar, and its max value
       scope.value = 0;
       scope.max = 100;
+
+      console.log(scope);
 
       var $seekBar = $(element);
 
@@ -317,7 +319,7 @@ blocJams.directive('slider', ['$document', function($document) {
 
       var notifyCallback = function(newValue) {
         if(typeof scope.onChange === 'function') {
-          scope.onChange({value: newValue});
+          scope.onChange({seekValue: newValue});
         }
       };
     }
